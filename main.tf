@@ -19,3 +19,10 @@ module "app_servers" {
   private_subnets        = module.network.private_subnets
   app_security_group     = module.network.app_security_group
 }
+
+module "rds" {
+  source            = "./modules/rds"
+  vpc_id            = module.network.vpc_id
+  private_subnets   = module.network.db_subnets
+  db_security_group = module.network.db_security_group
+}
