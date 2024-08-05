@@ -6,6 +6,11 @@ variable "public_subnets" {
   description = "List of public subnets"
 }
 
+variable "instance_type" {
+  description = "Type of instance"
+  default = "t2.micro"
+}
+
 variable "web_security_group" {
   description = "Security group for the web servers"
 }
