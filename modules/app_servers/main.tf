@@ -3,11 +3,7 @@ resource "aws_launch_configuration" "app" {
   image_id      = var.ami
   instance_type = var.instance_type
   security_groups = [var.app_security_group]
-  user_data = <<-EOF
-                #!/bin/bash
-                echo "Application Server" > /var/www/html/index.html
-                nohup busybox httpd -f -p 80 &
-                EOF
+  user_data       = base64encode(file("userdata1.sh"))
 }
 
 resource "aws_autoscaling_group" "app" {
