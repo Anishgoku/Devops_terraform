@@ -39,3 +39,5 @@ loads.
 o Use Terraform modules and best practices to structure the configuration.
 
 ![image](https://github.com/user-attachments/assets/d1a0ef5b-64bd-4c09-b244-780485b770c6)
+
+The terraform code has been set with consideration of best practices as much as possible.
