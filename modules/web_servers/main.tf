@@ -27,11 +27,8 @@ resource "aws_launch_configuration" "web" {
   image_id      = var.ami
   instance_type = "t2.micro"
   security_groups = [var.web_security_group]
-  user_data = <<-EOF
-                #!/bin/bash
-                echo "Hello, World" > index.html
-                nohup busybox httpd -f -p 80 &
-                EOF
+  key_name               = "Assignment"
+  user_data              = base64encode(file("userdata1.sh"))
 }
 
 resource "aws_autoscaling_group" "web" {
