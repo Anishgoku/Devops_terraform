@@ -2,6 +2,7 @@ resource "aws_lb" "main" {
   name               = "web-alb"
   internal           = false
   load_balancer_type = "application"
+  security_groups    = [var.web_security_group]
   subnets            = var.public_subnets
 }
 
@@ -10,6 +11,10 @@ resource "aws_lb_target_group" "main" {
   port     = 80
   protocol = "HTTP"
   vpc_id   = var.vpc_id
+  health_check {
+    path = "/"
+    port = "traffic-port"
+  }
 }
 
 resource "aws_lb_listener" "http" {
@@ -25,10 +30,10 @@ resource "aws_lb_listener" "http" {
 resource "aws_launch_configuration" "web" {
   name          = "web-launch-configuration"
   image_id      = var.ami
-  instance_type = "t2.micro"
+  instance_type = var.instance_type
   security_groups = [var.web_security_group]
   key_name               = "Assignment"
-  user_data              = base64encode(file("userdata1.sh"))
+  user_data              = base64encode(file("userdata.sh"))
 }
 
 resource "aws_autoscaling_group" "web" {
